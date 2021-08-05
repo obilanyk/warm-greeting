@@ -47,6 +47,22 @@ struct PersistentController {
         }
         
     }
+    func getById(greetingId: UUID, completion:  @escaping (Error?) ->() = {_ in}) -> Greeting? {
+        let context = container.viewContext
+        
+        let request: NSFetchRequest<Greeting> = Greeting.fetchRequest()
+        request.predicate = NSPredicate(format: "greetingId = %@", (greetingId.uuidString))
+        
+        
+        do {
+            return try context.fetch(request).first
+        } catch {
+            return nil
+        }
+        
+    }
+    
+   
     
     func getAllGreetings() -> [Greeting] {
         let fetchGreetingRequest: NSFetchRequest<Greeting> = Greeting.fetchRequest()
