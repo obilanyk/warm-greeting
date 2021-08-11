@@ -19,7 +19,7 @@ struct PersistentController {
             }
         }
     }
-    
+   
     func save(completion: @escaping (Error?) ->() = {_ in}) {
         let context = container.viewContext
         if context.hasChanges {

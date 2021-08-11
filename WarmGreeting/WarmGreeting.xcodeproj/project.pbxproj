@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9798A3BD26BC1CFE0091405F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9798A3BC26BC1CFE0091405F /* RatingView.swift */; };
+		97A0D05A26C3112000F25FF4 /* GreetingDefaultStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */; };
+		97A0D05D26C3B56C00F25FF4 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A0D05C26C3B56C00F25FF4 /* AppData.swift */; };
 		97B90F9626BB246A00656D97 /* GreetingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B90F9526BB246A00656D97 /* GreetingDetailView.swift */; };
-		97B90F9826BB26B100656D97 /* UpdateGreetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B90F9726BB26B100656D97 /* UpdateGreetingViewModel.swift */; };
 		97C14F9826B970F9002D8DB4 /* WarmGreetingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14F9726B970F9002D8DB4 /* WarmGreetingApp.swift */; };
 		97C14F9A26B970F9002D8DB4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14F9926B970F9002D8DB4 /* ContentView.swift */; };
 		97C14F9C26B970FC002D8DB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C14F9B26B970FC002D8DB4 /* Assets.xcassets */; };
@@ -18,12 +19,15 @@
 		97C14FAA26B97133002D8DB4 /* GreetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14FA926B97133002D8DB4 /* GreetingViewModel.swift */; };
 		97C14FAD26B97157002D8DB4 /* Wish.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97C14FAB26B97157002D8DB4 /* Wish.xcdatamodeld */; };
 		97C14FAF26B971F8002D8DB4 /* GreetingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14FAE26B971F8002D8DB4 /* GreetingCellView.swift */; };
+		97D943F826C141910050B0CF /* AddGreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D943F726C141910050B0CF /* AddGreetingView.swift */; };
+		97D943FC26C1500A0050B0CF /* GreetingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D943FB26C1500A0050B0CF /* GreetingEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9798A3BC26BC1CFE0091405F /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingDefaultStructure.swift; sourceTree = "<group>"; };
+		97A0D05C26C3B56C00F25FF4 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		97B90F9526BB246A00656D97 /* GreetingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingDetailView.swift; sourceTree = "<group>"; };
-		97B90F9726BB26B100656D97 /* UpdateGreetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateGreetingViewModel.swift; sourceTree = "<group>"; };
 		97C14F9426B970F9002D8DB4 /* WarmGreeting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmGreeting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C14F9726B970F9002D8DB4 /* WarmGreetingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmGreetingApp.swift; sourceTree = "<group>"; };
 		97C14F9926B970F9002D8DB4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +38,8 @@
 		97C14FA926B97133002D8DB4 /* GreetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewModel.swift; sourceTree = "<group>"; };
 		97C14FAC26B97157002D8DB4 /* Wish.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Wish.xcdatamodel; sourceTree = "<group>"; };
 		97C14FAE26B971F8002D8DB4 /* GreetingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCellView.swift; sourceTree = "<group>"; };
+		97D943F726C141910050B0CF /* AddGreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGreetingView.swift; sourceTree = "<group>"; };
+		97D943FB26C1500A0050B0CF /* GreetingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97A0D05B26C3B55600F25FF4 /* Structure */ = {
+			isa = PBXGroup;
+			children = (
+				97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */,
+				97A0D05C26C3B56C00F25FF4 /* AppData.swift */,
+			);
+			path = Structure;
+			sourceTree = "<group>";
+		};
 		97C14F8B26B970F9002D8DB4 = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +81,7 @@
 		97C14F9626B970F9002D8DB4 /* WarmGreeting */ = {
 			isa = PBXGroup;
 			children = (
+				97A0D05B26C3B55600F25FF4 /* Structure */,
 				97C14FA826B97124002D8DB4 /* ViewModels */,
 				97C14F9726B970F9002D8DB4 /* WarmGreetingApp.swift */,
 				97C14F9926B970F9002D8DB4 /* ContentView.swift */,
@@ -77,6 +93,8 @@
 				97B90F9526BB246A00656D97 /* GreetingDetailView.swift */,
 				97C14FAE26B971F8002D8DB4 /* GreetingCellView.swift */,
 				9798A3BC26BC1CFE0091405F /* RatingView.swift */,
+				97D943F726C141910050B0CF /* AddGreetingView.swift */,
+				97D943FB26C1500A0050B0CF /* GreetingEditView.swift */,
 			);
 			path = WarmGreeting;
 			sourceTree = "<group>";
@@ -93,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				97C14FA926B97133002D8DB4 /* GreetingViewModel.swift */,
-				97B90F9726BB26B100656D97 /* UpdateGreetingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -167,12 +184,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97A0D05D26C3B56C00F25FF4 /* AppData.swift in Sources */,
 				97C14FA726B9710D002D8DB4 /* PersistenceController.swift in Sources */,
 				97C14F9A26B970F9002D8DB4 /* ContentView.swift in Sources */,
 				97B90F9626BB246A00656D97 /* GreetingDetailView.swift in Sources */,
+				97D943FC26C1500A0050B0CF /* GreetingEditView.swift in Sources */,
 				9798A3BD26BC1CFE0091405F /* RatingView.swift in Sources */,
 				97C14F9826B970F9002D8DB4 /* WarmGreetingApp.swift in Sources */,
-				97B90F9826BB26B100656D97 /* UpdateGreetingViewModel.swift in Sources */,
+				97D943F826C141910050B0CF /* AddGreetingView.swift in Sources */,
+				97A0D05A26C3112000F25FF4 /* GreetingDefaultStructure.swift in Sources */,
 				97C14FAA26B97133002D8DB4 /* GreetingViewModel.swift in Sources */,
 				97C14FAD26B97157002D8DB4 /* Wish.xcdatamodeld in Sources */,
 				97C14FAF26B971F8002D8DB4 /* GreetingCellView.swift in Sources */,

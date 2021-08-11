@@ -13,25 +13,40 @@ class GreetingListViewModel: ObservableObject {
    
     @Published  var greetings: [GreetingViewModel] = []
     
-//    @Published var tasks: [GreetingViewModel] = []
-    
-    var name: String  = ""
-    var category: Category = Category.NotMentioned
-    var content: String = ""
-    var favourite: Bool = false
-    var mark: Int = 0
-    
     func getAllGreetings() {
         greetings = PersistentController.shared.getAllGreetings().map(GreetingViewModel.init)
     }
     
-    func save() {
+    func preloadData() {
+        for greeting in greetingDefaultList {
+            save(greetingViewState: greeting)
+        }
+    }
+    
+    func update( id: NSManagedObjectID, greetingViewState: GreetingViewState) {
+        
+        let existingGreeting = PersistentController.shared.getById(id: id)
+        if let greeting = existingGreeting {
+            greeting.name = greetingViewState.name
+            greeting.category = greetingViewState.category.description
+            greeting.content = greetingViewState.content
+            greeting.favourite = greetingViewState.favourite
+            greeting.mark = Int16(greetingViewState.mark)
+            PersistentController.shared.save(){error in
+                print( "error \(error?.localizedDescription)")
+            }
+        }
+    }
+    func save(greetingViewState: GreetingViewState) {
+        if greetingViewState.name.isEmpty && greetingViewState.content.isEmpty {
+        return
+        }
         let greeting = Greeting(context: PersistentController.shared.container.viewContext)
-        greeting.name = name
-        greeting.category = category.description
-        greeting.content = content
-        greeting.favourite = favourite
-        greeting.mark = Int16(mark)
+        greeting.name = greetingViewState.name
+        greeting.category = greetingViewState.category.description
+        greeting.content = greetingViewState.content
+        greeting.favourite = greetingViewState.favourite
+        greeting.mark = Int16(greetingViewState.mark)
         PersistentController.shared.save(){error in
             print(error?.localizedDescription)
         }
@@ -86,18 +101,12 @@ class GreetingViewModel {
     var mark: Int {
         return Int(greeting.mark)
     }
-    
-  
 }
-
-
 
 enum Category: String {
     var description: String {
         return rawValue
     }
-    
-    
     case Family
     case Friends
     case Colleagues
@@ -105,8 +114,11 @@ enum Category: String {
     case NotMentioned = "Not Mentioned"
     static var all = [Category.Family, .Friends, .Colleagues, .Other]
 }
-
-//case family = "Family"
-//case friends = "Friends"
-//case colleagues = "Colleagues"
-//case other = "Other"
+struct GreetingViewState {
+    var name: String = ""
+    var category: Category = .NotMentioned
+    var content: String = ""
+    var favourite: Bool = false
+    var mark: Int = 0
+    
+}
