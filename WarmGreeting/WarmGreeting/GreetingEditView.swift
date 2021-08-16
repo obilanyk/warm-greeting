@@ -8,60 +8,50 @@
 import SwiftUI
 
 struct GreetingEditView: View {
-    @Binding var greetingViewState : GreetingViewState
+
+    @Binding var greetingViewState: GreetingViewState
     @State private var showingActionSheet = false
     @State private var placeholder: String = "Enter text"
+
     var body: some View {
-        VStack{
+        VStack {
             TextField("Enter task name", text: $greetingViewState.name)
                 .foregroundColor(.white)
                 .font(.largeTitle)
                 .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 12.0, trailing: 8.0))
-            Group{
-                VStack{
-                    
+            Group {
+                VStack {
                     ZStack {
                         if self.greetingViewState.content.isEmpty {
-                            TextEditor(text:$placeholder)
+                            TextEditor(text: $placeholder)
                                 .font(.body)
                                 .foregroundColor(.gray)
                                 .disabled(true)
                                 .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
                         }
-                        TextEditor(text:$greetingViewState.content)
+                        TextEditor(text: $greetingViewState.content)
                             .foregroundColor(.black)
                             .font(.body)
                             .opacity(self.greetingViewState.content.isEmpty ? 0.25 : 1)
-                            
                             .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
-                        
-                        
                     }
-                    
-                   
                     Divider().foregroundColor(Color("mainColor"))
                         .padding(EdgeInsets(top: 8.0, leading: 0.0, bottom: 16.0, trailing: 0.0))
                     HStack(alignment: .center, spacing: 5, content: {
                         Text(greetingViewState.category.description)
-                            
                             .foregroundColor(Color("mainColor"))
                             .onTapGesture {
                                 self.showingActionSheet = true
                             }
-                            
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .actionSheet(isPresented: $showingActionSheet) {
                                 ActionSheet(title: Text("Category"), message: Text("Change category"), buttons:
-                                                
-                                                
                                                 getCategoryBtn()
-                                            
                                 )
                             }
                         RatingView(rating: $greetingViewState.mark)
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                        
-                    } )
+                    })
                     .padding(EdgeInsets(top: 0.0, leading: 8.0, bottom: 16.0, trailing: 8.0))
                 }
             }
@@ -72,9 +62,8 @@ struct GreetingEditView: View {
             .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
         }
     }
-    func getCategoryBtn() -> Array<Alert.Button>{
+    func getCategoryBtn() -> [Alert.Button] {
         var buttons: [Alert.Button] = []
-        
         buttons = Category.all.map({ item in
             Alert.Button.default(Text(item.description)) { greetingViewState.category = item   }
         })
@@ -82,10 +71,9 @@ struct GreetingEditView: View {
         return buttons
     }
 }
-//
-//struct GreetingEditView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GreetingEditView(greetingViewState: GreetingViewState())
-//        
-//    }
-//}
+
+struct GreetingEditView_Previews: PreviewProvider {
+    static var previews: some View {
+        GreetingEditView(greetingViewState: .constant(greetingDefaultList[0]))
+    }
+}

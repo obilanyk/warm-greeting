@@ -4,10 +4,11 @@
 //
 //  Created by Olha Bilanyk on 03.08.2021.
 //
-
+// swiftlint:disable trailing_whitespace line_length
 import SwiftUI
+
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         preloadData()
         return true
     }
@@ -29,5 +30,4 @@ struct WarmGreetingApp: App {
             ContentView()
         }
     }
-    
 }

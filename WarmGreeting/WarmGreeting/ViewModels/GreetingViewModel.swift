@@ -4,37 +4,38 @@
 //
 //  Created by Olha Bilanyk on 29.07.2021.
 //
+// swiftlint:disable identifier_name
 
 import Foundation
-
 import CoreData
 
 class GreetingListViewModel: ObservableObject {
-   
+
     @Published  var greetings: [GreetingViewModel] = []
-    
+    init() {
+        getAllGreetings()
+    }
+
     func getAllGreetings() {
         greetings = PersistentController.shared.getAllGreetings().map(GreetingViewModel.init)
     }
-    
     func preloadData() {
         for greeting in greetingDefaultList {
             save(greetingViewState: greeting)
         }
     }
-    
-    func update( id: NSManagedObjectID, greetingViewState: GreetingViewState) {
-        
-        let existingGreeting = PersistentController.shared.getById(id: id)
+    func update(objectId: NSManagedObjectID, greetingViewState: GreetingViewState) {
+        let existingGreeting = PersistentController.shared.getById(id: objectId)
         if let greeting = existingGreeting {
             greeting.name = greetingViewState.name
             greeting.category = greetingViewState.category.description
             greeting.content = greetingViewState.content
             greeting.favourite = greetingViewState.favourite
             greeting.mark = Int16(greetingViewState.mark)
-            PersistentController.shared.save(){error in
-                print( "error \(error?.localizedDescription)")
+            PersistentController.shared.save { error in
+                print( "error \(String(describing: error?.localizedDescription))")
             }
+            getAllGreetings()
         }
     }
     func save(greetingViewState: GreetingViewState) {
@@ -47,44 +48,35 @@ class GreetingListViewModel: ObservableObject {
         greeting.content = greetingViewState.content
         greeting.favourite = greetingViewState.favourite
         greeting.mark = Int16(greetingViewState.mark)
-        PersistentController.shared.save(){error in
-            print(error?.localizedDescription)
+        PersistentController.shared.save { error in
+            print( "error \(String(describing: error?.localizedDescription))")
         }
+        getAllGreetings()
     }
-    
+
     func deleteGreeting(_ greeting: GreetingViewModel) {
-//        var deleted = false
         let existingGreeting = PersistentController.shared.getById(id: greeting.id)
         if let existingGreeting = existingGreeting {
-            PersistentController.shared.delete(existingGreeting, completion: {error in
-                print(error?.localizedDescription)
+            PersistentController.shared.delete(existingGreeting, completion: { error in
+                print( "error \(String(describing: error?.localizedDescription))")
             })
         }
-        
-       
-        
     }
 }
 
 class GreetingViewModel {
-    
     let greeting: Greeting
     init(greeting: Greeting) {
         self.greeting = greeting
     }
-    
     var id: NSManagedObjectID {
         return greeting.objectID
     }
-    
     var greetingId: String {
-
         guard let greetingId = self.greeting.greetingId else {
             return ""
         }
-
         return greetingId.uuidString
-
     }
     var name: String {
         return greeting.name ?? ""
@@ -120,5 +112,4 @@ struct GreetingViewState {
     var content: String = ""
     var favourite: Bool = false
     var mark: Int = 0
-    
 }

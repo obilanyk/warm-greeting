@@ -4,30 +4,32 @@
 //
 //  Created by Olha Bilanyk on 09.08.2021.
 //
-
+// swiftlint:disable multiple_closures_with_trailing_closure
 import SwiftUI
 
 struct AddGreetingView: View {
-    
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    @ObservedObject private var greetingListViewModel = GreetingListViewModel()
-    @State private var greetingViewState = GreetingViewState()
-    @State private var showingActionSheet = false
-    @State private var placeholder: String = "Enter text"
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var greetingListVM: GreetingListViewModel
+    @State var greetingViewState = GreetingViewState()
+
     var body: some View {
-        ZStack{
+        ZStack {
             Color("mainColor")
                 .ignoresSafeArea()
             GreetingEditView(greetingViewState: $greetingViewState)
         }
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading:  Button(action: { saveGreeting() }) {
-            Image(systemName: "chevron.left")
-        })
+        .navigationBarItems(leading:
+                                Button(action: {
+                                    saveGreeting()
+                                }) {
+                                    Image(systemName: "chevron.left")
+                                })
     }
+
     func saveGreeting() {
-        greetingListViewModel.save(greetingViewState: greetingViewState)
+        greetingListVM.save(greetingViewState: greetingViewState)
         self.presentationMode.wrappedValue.dismiss()
     }
 }

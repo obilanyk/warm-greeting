@@ -8,13 +8,13 @@
 import Foundation
 
 struct AppData {
-    
+
     private let isNewUserKey = "isNewUser"
     private let preloadedDataKey = "didPreloadData"
 
-    private let userDefaults:UserDefaults
-    
-    var isNewUser: Bool{
+    private let userDefaults: UserDefaults
+
+    var isNewUser: Bool {
         get {
             return userDefaults.bool(forKey: isNewUserKey)
         }
@@ -22,7 +22,7 @@ struct AppData {
             userDefaults.set(newValue, forKey: isNewUserKey)
         }
     }
-    var preloadedData: Bool{
+    var preloadedData: Bool {
         get {
             return userDefaults.bool(forKey: preloadedDataKey)
         }
@@ -37,4 +37,3 @@ struct AppData {
                                 preloadedDataKey: false])
     }
 }
-
