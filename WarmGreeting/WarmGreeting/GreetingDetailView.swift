@@ -33,6 +33,28 @@ struct GreetingDetailView: View {
                                     saveGreeting()
                                 }) {
                                     Image(systemName: "chevron.left")
+                                        .renderingMode(.template)
+                                        .foregroundColor(.black)
+                                },
+                            trailing:
+                                Button(action: {
+                                    showingActionSheet = true
+                                }) {
+                                    Image(systemName: "trash")
+                                        .renderingMode(.template)
+                                        .foregroundColor(.black)
+                                }
+                                .alert(isPresented: $showingActionSheet) {
+                                    Alert(
+                                        title: Text("Are you sure you want to delete this?"),
+                                        message: Text("There is no undo"),
+                                        primaryButton: .destructive(Text("Delete")) {
+                                            print("Deleting...")
+                                            greetingListVM.deleteGreeting(greeting)
+                                            self.presentationMode.wrappedValue.dismiss()
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
                                 })
     }
     func saveGreeting() {

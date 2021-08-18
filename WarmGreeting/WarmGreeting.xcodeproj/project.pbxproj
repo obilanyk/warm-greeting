@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9716BBDA26CC00BF00674BF2 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9716BBD926CC00BF00674BF2 /* SearchBar.swift */; };
 		9798A3BD26BC1CFE0091405F /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9798A3BC26BC1CFE0091405F /* RatingView.swift */; };
 		97A0D05A26C3112000F25FF4 /* GreetingDefaultStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */; };
 		97A0D05D26C3B56C00F25FF4 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A0D05C26C3B56C00F25FF4 /* AppData.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9716BBD926CC00BF00674BF2 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		9798A3BC26BC1CFE0091405F /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingDefaultStructure.swift; sourceTree = "<group>"; };
 		97A0D05C26C3B56C00F25FF4 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				9798A3BC26BC1CFE0091405F /* RatingView.swift */,
 				97D943F726C141910050B0CF /* AddGreetingView.swift */,
 				97D943FB26C1500A0050B0CF /* GreetingEditView.swift */,
+				9716BBD926CC00BF00674BF2 /* SearchBar.swift */,
 			);
 			path = WarmGreeting;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9716BBDA26CC00BF00674BF2 /* SearchBar.swift in Sources */,
 				97A0D05D26C3B56C00F25FF4 /* AppData.swift in Sources */,
 				97C14FA726B9710D002D8DB4 /* PersistenceController.swift in Sources */,
 				97C14F9A26B970F9002D8DB4 /* ContentView.swift in Sources */,

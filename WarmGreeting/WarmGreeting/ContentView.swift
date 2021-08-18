@@ -11,12 +11,47 @@ struct ContentView: View {
 
     @ObservedObject private var greetingListVM = GreetingListViewModel()
 
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+        UITableViewCell.appearance().backgroundColor = .clear
+        UITableView.appearance().separatorStyle = .none
+        UITableViewCell.appearance().selectionStyle = .none
+    }
     var body: some View {
         NavigationView {
-            List(greetingListVM.greetings, id: \.id) { greeting in
-                GreetingCellView(greeting: greeting)
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color("listColor"), Color("listColor2")]),
+                               startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                    VStack {
+                            SearchBar(text: $greetingListVM.searchText, placeholder: "Search by name or content")
+                                .zIndex(-1.0)
+                            if !greetingListVM.searchText.isEmpty {
+                                Picker("", selection: $greetingListVM.selectedSearchScopeIndex) {
+                                    ForEach(0 ..< Category.allCases.count, id: \.self) { categoryIndex in
+                                        let categoryType = Category.allCases[categoryIndex]
+                                        Text(categoryType.rawValue).tag(categoryIndex)
+                                    }
+                                }.pickerStyle(SegmentedPickerStyle())
+                                .zIndex(-1.0)
+                            }
+                            List {
+                                ForEach(greetingListVM.greetings, id: \.id) {greeting in
+                                    GreetingCellView(greeting: greeting)
+                                        .contextMenu {
+                                            Button("Delete") {
+                                                greetingListVM.deleteGreeting(greeting)
+                                            }
+                                        }
+                                }
+                                .listRowBackground(Color.clear)
+                                .listStyle(GroupedListStyle())
+                            }
+                            .background(Color.clear)
+                    }
+//                }
+                .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
             }
-            .padding(EdgeInsets(top: 10.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
             .navigationBarTitle(Text("Warm Greeting"), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -27,6 +62,8 @@ struct ContentView: View {
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .foregroundColor(.blue)
         .accentColor(.black)
         .environmentObject(greetingListVM)

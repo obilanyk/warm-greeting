@@ -18,7 +18,7 @@ struct GreetingCellView: View {
                     .font(.title2)
                     .lineLimit(2)
                     .minimumScaleFactor(0.5)
-                    .foregroundColor(.orange)
+                    .foregroundColor(Color("mainColor"))
                 Text(greeting.content)
                     .fontWeight(.regular)
                     .lineLimit(3)
@@ -30,7 +30,7 @@ struct GreetingCellView: View {
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .background(Color.white)
         .cornerRadius(8)
-        .shadow(color: .blue.opacity(0.4), radius: 5, x: 0.0, y: 0.0)
+        .shadow(color: Color.black.opacity(0.4), radius: 5, x: 0.0, y: 0.0)
     }
 }
 

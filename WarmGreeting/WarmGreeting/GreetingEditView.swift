@@ -64,7 +64,7 @@ struct GreetingEditView: View {
     }
     func getCategoryBtn() -> [Alert.Button] {
         var buttons: [Alert.Button] = []
-        buttons = Category.all.map({ item in
+        buttons = Category.allCases.map({ item in
             Alert.Button.default(Text(item.description)) { greetingViewState.category = item   }
         })
         buttons.append(Alert.Button.cancel())
