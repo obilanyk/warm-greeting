@@ -9,22 +9,10 @@
 import Foundation
 import CoreData
 
-class GreetingData {
-    @Published  var greetings: [GreetingViewModel] = []
-    init() {
-        greetings = getAllGreetings()
-    }
-
-    func getAllGreetings() -> [GreetingViewModel] {
-        greetings = PersistentController.shared.getAllGreetings().map(GreetingViewModel.init)
-        return greetings
-    }
-}
-
 class GreetingListViewModel: ObservableObject {
 
     @Published  var greetings: [GreetingViewModel] = []
-    private let greetingData = GreetingData()
+//    private let greetingData = GreetingData()
 
     @Published var searchText: String = "" {
         didSet {
@@ -40,27 +28,23 @@ class GreetingListViewModel: ObservableObject {
     }
 
     init() {
-        greetings = greetingData.greetings
+        updateSearchFor(text: searchText, categoryType: Category.allCases[selectedSearchScopeIndex])
     }
 
     func updateSearchFor(text: String, categoryType: Category) {
         guard !text.isEmpty else {
-            greetings = greetingData.greetings
+           greetings = PersistentController.shared.getAllGreetings(with: nil).map(GreetingViewModel.init)
             return
         }
         greetings = greetingsFor(text: text, categoryType: categoryType)
     }
 
     func greetingsFor(text: String, categoryType: Category) -> [GreetingViewModel] {
-        let lowercasedText = text.lowercased()
-        var filteredGreetings = greetingData.greetings.filter {
-            $0.name.lowercased().contains(lowercasedText)
-                || $0.content.lowercased().contains(lowercasedText)
-        }
+        var filter = NSPredicate(format: "%K CONTAINS[cd] %@ OR %K CONTAINS[cd] %@", "name", text, "content", text)
         if categoryType != .none {
-            filteredGreetings = filteredGreetings.filter { $0.category == categoryType }
-        }
-        return filteredGreetings
+            filter = NSPredicate(format: "%K CONTAINS[cd] %@ OR %K CONTAINS[cd] %@ AND %K = %@", "name", text, "content", text, "category", categoryType.rawValue)
+    }
+        return PersistentController.shared.getAllGreetings(with: filter).map(GreetingViewModel.init)
     }
 
     func preloadData() {
@@ -108,9 +92,8 @@ class GreetingListViewModel: ObservableObject {
         getAllGreetings()
     }
     func getAllGreetings() {
-        greetings = greetingData.getAllGreetings()
-
-    }
+        updateSearchFor(text: searchText, categoryType: Category.allCases[selectedSearchScopeIndex])
+       }
 }
 
 class GreetingViewModel {

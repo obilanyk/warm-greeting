@@ -58,11 +58,14 @@ struct PersistentController {
         }
     }
 
-    func getAllGreetings() -> [Greeting] {
+    func getAllGreetings(with predicate: NSPredicate?) -> [Greeting] {
         let fetchGreetingRequest: NSFetchRequest<Greeting> = Greeting.fetchRequest()
+        if let predicate = predicate {
+            fetchGreetingRequest.predicate = predicate
+        }
         let context = container.viewContext
         do {
-           return try context.fetch(fetchGreetingRequest)
+            return try context.fetch(fetchGreetingRequest)
         } catch {
             return []
         }
