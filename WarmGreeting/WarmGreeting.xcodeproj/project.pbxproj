@@ -22,6 +22,9 @@
 		97C14FAF26B971F8002D8DB4 /* GreetingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C14FAE26B971F8002D8DB4 /* GreetingCellView.swift */; };
 		97D943F826C141910050B0CF /* AddGreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D943F726C141910050B0CF /* AddGreetingView.swift */; };
 		97D943FC26C1500A0050B0CF /* GreetingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D943FB26C1500A0050B0CF /* GreetingEditView.swift */; };
+		97E1F67326D6BCF40072F79C /* FilteredList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1F67226D6BCF40072F79C /* FilteredList.swift */; };
+		97E1F67A26D6D5000072F79C /* Greeting+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1F67826D6D5000072F79C /* Greeting+CoreDataClass.swift */; };
+		97E1F67B26D6D5000072F79C /* Greeting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E1F67926D6D5000072F79C /* Greeting+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		97C14FAE26B971F8002D8DB4 /* GreetingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingCellView.swift; sourceTree = "<group>"; };
 		97D943F726C141910050B0CF /* AddGreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGreetingView.swift; sourceTree = "<group>"; };
 		97D943FB26C1500A0050B0CF /* GreetingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingEditView.swift; sourceTree = "<group>"; };
+		97E1F67226D6BCF40072F79C /* FilteredList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredList.swift; sourceTree = "<group>"; };
+		97E1F67826D6D5000072F79C /* Greeting+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Greeting+CoreDataClass.swift"; sourceTree = "<group>"; };
+		97E1F67926D6D5000072F79C /* Greeting+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Greeting+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,8 @@
 		97A0D05B26C3B55600F25FF4 /* Structure */ = {
 			isa = PBXGroup;
 			children = (
+				97E1F67826D6D5000072F79C /* Greeting+CoreDataClass.swift */,
+				97E1F67926D6D5000072F79C /* Greeting+CoreDataProperties.swift */,
 				97A0D05926C3112000F25FF4 /* GreetingDefaultStructure.swift */,
 				97A0D05C26C3B56C00F25FF4 /* AppData.swift */,
 			);
@@ -98,6 +106,7 @@
 				97D943F726C141910050B0CF /* AddGreetingView.swift */,
 				97D943FB26C1500A0050B0CF /* GreetingEditView.swift */,
 				9716BBD926CC00BF00674BF2 /* SearchBar.swift */,
+				97E1F67226D6BCF40072F79C /* FilteredList.swift */,
 			);
 			path = WarmGreeting;
 			sourceTree = "<group>";
@@ -210,10 +219,13 @@
 			files = (
 				9716BBDA26CC00BF00674BF2 /* SearchBar.swift in Sources */,
 				97A0D05D26C3B56C00F25FF4 /* AppData.swift in Sources */,
+				97E1F67A26D6D5000072F79C /* Greeting+CoreDataClass.swift in Sources */,
 				97C14FA726B9710D002D8DB4 /* PersistenceController.swift in Sources */,
+				97E1F67B26D6D5000072F79C /* Greeting+CoreDataProperties.swift in Sources */,
 				97C14F9A26B970F9002D8DB4 /* ContentView.swift in Sources */,
 				97B90F9626BB246A00656D97 /* GreetingDetailView.swift in Sources */,
 				97D943FC26C1500A0050B0CF /* GreetingEditView.swift in Sources */,
+				97E1F67326D6BCF40072F79C /* FilteredList.swift in Sources */,
 				9798A3BD26BC1CFE0091405F /* RatingView.swift in Sources */,
 				97C14F9826B970F9002D8DB4 /* WarmGreetingApp.swift in Sources */,
 				97D943F826C141910050B0CF /* AddGreetingView.swift in Sources */,

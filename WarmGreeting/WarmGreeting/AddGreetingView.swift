@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct AddGreetingView: View {
-
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var greetingListVM: GreetingListViewModel
     @State var greetingViewState = GreetingViewState()
 
     var body: some View {
@@ -29,7 +27,7 @@ struct AddGreetingView: View {
     }
 
     func saveGreeting() {
-        greetingListVM.save(greetingViewState: greetingViewState)
+        PersistentController.shared.createGreeting(with: greetingViewState)
         self.presentationMode.wrappedValue.dismiss()
     }
 }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct GreetingDetailView: View {
     @Environment(\.presentationMode) var presentationMode
-    let greeting: GreetingViewModel
-    @EnvironmentObject var greetingListVM: GreetingListViewModel
+    let greeting: Greeting
+
     @State private var greetingViewState = GreetingViewState()
     @State private var showingActionSheet = false
     @State private var placeholder: String = "Enter text"
@@ -21,11 +21,11 @@ struct GreetingDetailView: View {
             GreetingEditView(greetingViewState: $greetingViewState)
         }
         .onAppear {
-            self.greetingViewState.name = self.greeting.name
-            self.greetingViewState.content = self.greeting.content
-            self.greetingViewState.category = self.greeting.category
+            self.greetingViewState.name = self.greeting.wrappedName
+            self.greetingViewState.content = self.greeting.wrappedContent
+            self.greetingViewState.category = self.greeting.wrappedCategory
             self.greetingViewState.favourite = self.greeting.favourite
-            self.greetingViewState.mark = self.greeting.mark
+            self.greetingViewState.mark = self.greeting.wrappedMark
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
@@ -50,7 +50,7 @@ struct GreetingDetailView: View {
                                         message: Text("There is no undo"),
                                         primaryButton: .destructive(Text("Delete")) {
                                             print("Deleting...")
-                                            greetingListVM.deleteGreeting(greeting)
+                                            PersistentController.shared.delete(greeting)
                                             self.presentationMode.wrappedValue.dismiss()
                                         },
                                         secondaryButton: .cancel()
@@ -58,14 +58,22 @@ struct GreetingDetailView: View {
                                 })
     }
     func saveGreeting() {
-        greetingListVM.update(objectId: greeting.id, greetingViewState: greetingViewState)
+        self.greeting.objectWillChange.send()
+        self.greeting.name = greetingViewState.name
+        self.greeting.category = greetingViewState.category.description
+        self.greeting.content = greetingViewState.content
+        self.greeting.favourite = greetingViewState.favourite
+        self.greeting.mark = Int16(greetingViewState.mark)
+        PersistentController.shared.update { error in
+            print( "error \(String(describing: error?.localizedDescription))")
+        }
         self.presentationMode.wrappedValue.dismiss()
     }
 }
 
 struct GreetingDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let greeting = Greeting()
-        return GreetingDetailView(greeting: GreetingViewModel(greeting: greeting))
+//        let greeting = Greeting()
+        return GreetingDetailView(greeting: Greeting())
     }
 }

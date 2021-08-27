@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func preloadData() {
         var appData = AppData()
         if !appData.preloadedData {
-            GreetingListViewModel().preloadData()
+            PersistentController.shared.initGreetingWithDefaultData()
             appData.preloadedData = true
             
         }
@@ -24,10 +24,26 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct WarmGreetingApp: App {
+    let persistenceController = PersistentController.shared
+    @Environment(\.scenePhase) var scenePhase
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        }.onChange(of: scenePhase) {(newScenePhase) in
+            switch newScenePhase {
+            case .background:
+                print("Scene is in background")
+                persistenceController.save()
+            case .inactive:
+                print("Scene is inactive")
+            case .active:
+                print("Scene is active")
+            @unknown default:
+                print("Default")
+            }
         }
     }
 }

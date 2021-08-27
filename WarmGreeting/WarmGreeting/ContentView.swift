@@ -4,12 +4,14 @@
 //
 //  Created by Olha Bilanyk on 28.07.2021.
 //
+// swiftlint:disable line_length
+
 
 import SwiftUI
 
 struct ContentView: View {
-
-    @ObservedObject private var greetingListVM = GreetingListViewModel()
+    @State var searchText: String = ""
+    @State var selectedSearchScopeIndex: Int = 0
 
     init() {
         UITableView.appearance().backgroundColor = .clear
@@ -24,10 +26,10 @@ struct ContentView: View {
                                startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
                     VStack {
-                            SearchBar(text: $greetingListVM.searchText, placeholder: "Search by name or content")
+                            SearchBar(text: $searchText, placeholder: "Search by name or content")
                                 .zIndex(-1.0)
-                            if !greetingListVM.searchText.isEmpty {
-                                Picker("", selection: $greetingListVM.selectedSearchScopeIndex) {
+                            if !searchText.isEmpty {
+                                Picker("", selection: $selectedSearchScopeIndex) {
                                     ForEach(0 ..< Category.allCases.count, id: \.self) { categoryIndex in
                                         let categoryType = Category.allCases[categoryIndex]
                                         Text(categoryType.rawValue).tag(categoryIndex)
@@ -35,19 +37,19 @@ struct ContentView: View {
                                 }.pickerStyle(SegmentedPickerStyle())
                                 .zIndex(-1.0)
                             }
-                            List {
-                                ForEach(greetingListVM.greetings, id: \.id) {greeting in
-                                    GreetingCellView(greeting: greeting)
-                                        .contextMenu {
-                                            Button("Delete") {
-                                                greetingListVM.deleteGreeting(greeting)
-                                            }
-                                        }
+                        
+                        FilteredList(filterValue: searchText, categoryIndex: selectedSearchScopeIndex
+//                                     , sortField: [NSSortDescriptor(keyPath: \Greeting.objectID, ascending: true)]
+                        ) { (greeting: Greeting) in
+//                            Text("\(greeting.name ?? "") ")
+                            GreetingCellView(greeting: greeting)
+                                .contextMenu {
+                                    Button("Delete") {
+                                        PersistentController.shared.delete(greeting)
+
+                                    }
                                 }
-                                .listRowBackground(Color.clear)
-                                .listStyle(GroupedListStyle())
-                            }
-                            .background(Color.clear)
+                        }
                     }
 //                }
                 .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
@@ -55,7 +57,9 @@ struct ContentView: View {
             .navigationBarTitle(Text("Warm Greeting"), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: AddGreetingView()) {
+                    NavigationLink(destination: AddGreetingView()
+//                                    .environment(\.managedObjectContext, viewContext)
+                    ) {
                         Image(systemName: "plus")
                             .shadow(color: .black, radius: 10, x: 0.0, y: 0.0)
                     }
@@ -66,14 +70,6 @@ struct ContentView: View {
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         .foregroundColor(.blue)
         .accentColor(.black)
-        .environmentObject(greetingListVM)
-    }
-
-    func removeGreeting(at offsets: IndexSet) {
-        for index in offsets {
-            let greeting = greetingListVM.greetings[index]
-            greetingListVM.deleteGreeting(greeting)
-        }
     }
 }
 

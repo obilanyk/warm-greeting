@@ -31,7 +31,17 @@ struct PersistentController {
             }
         }
     }
-
+    func update(completion: @escaping (Error?) -> () = {_ in}) {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+                completion(nil)
+            } catch {
+                container.viewContext.rollback()
+                completion(error)
+            }
+        }
+    }
     func delete(_ object: NSManagedObject, completion:  @escaping (Error?) -> () = {_ in}) {
         let context = container.viewContext
         context.delete(object)
@@ -68,6 +78,27 @@ struct PersistentController {
             return try context.fetch(fetchGreetingRequest)
         } catch {
             return []
+        }
+    }
+
+    func createGreeting(with greetingViewState: GreetingViewState) {
+        if greetingViewState.name.isEmpty && greetingViewState.content.isEmpty {
+            return
+        }
+        let greeting = Greeting(context: container.viewContext)
+        greeting.objectWillChange.send()
+               greeting.name = greetingViewState.name
+               greeting.category = greetingViewState.category.description
+               greeting.content = greetingViewState.content
+               greeting.favourite = greetingViewState.favourite
+               greeting.mark = Int16(greetingViewState.mark)
+               save { error in
+                   print( "error \(String(describing: error?.localizedDescription))")
+               }
+    }
+    func  initGreetingWithDefaultData() {
+        for greeting in greetingDefaultList {
+            createGreeting(with: greeting)
         }
     }
 }

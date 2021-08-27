@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct GreetingCellView: View {
-    let greeting: GreetingViewModel
+    @ObservedObject var greeting: Greeting
 
     var body: some View {
         NavigationLink(destination: GreetingDetailView(greeting: greeting)) {
             VStack(alignment: .leading, spacing: 5, content: {
-                Text(greeting.name)
+                Text(greeting.wrappedName)
                     .fontWeight(.semibold)
                     .font(.title2)
                     .lineLimit(2)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(Color("mainColor"))
-                Text(greeting.content)
+                Text(greeting.wrappedContent)
                     .fontWeight(.regular)
                     .lineLimit(3)
                     .font(.caption)
@@ -36,6 +36,6 @@ struct GreetingCellView: View {
 
 struct GreetingCellView_Previews: PreviewProvider {
     static var previews: some View {
-        GreetingCellView(greeting: GreetingViewModel(greeting: Greeting()))
+        GreetingCellView(greeting: Greeting())
     }
 }
