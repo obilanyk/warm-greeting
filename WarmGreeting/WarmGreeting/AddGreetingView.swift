@@ -10,12 +10,14 @@ import SwiftUI
 struct AddGreetingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var greetingViewState = GreetingViewState()
+    @State private var greetingStyle = GreetingStyle()
 
     var body: some View {
         ZStack {
             Color("mainColor")
                 .ignoresSafeArea()
-            GreetingEditView(greetingViewState: $greetingViewState)
+            GreetingEditView(greetingViewState: $greetingViewState,
+                             greetingStyle: $greetingStyle, takePic: .constant(false))
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:

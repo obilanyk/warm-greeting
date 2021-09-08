@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct GreetingEditView: View {
-
+    @Binding var takePic: Bool
     @Binding var greetingViewState: GreetingViewState
     @State private var showingActionSheet = false
     @State private var placeholder: String = "Enter text"
-
+    @Binding private var greetingStyle: GreetingStyle
+    
+    init( greetingViewState: Binding<GreetingViewState>,
+          greetingStyle: Binding<GreetingStyle>, takePic: Binding<Bool>) {
+        UITextView.appearance().backgroundColor = .clear
+        self._greetingViewState = greetingViewState
+        self._greetingStyle = greetingStyle
+        self._takePic = takePic
+    }
     var body: some View {
         VStack {
             TextField("Enter task name", text: $greetingViewState.name)
@@ -21,20 +29,13 @@ struct GreetingEditView: View {
                 .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 12.0, trailing: 8.0))
             Group {
                 VStack {
-                    ZStack {
-                        if self.greetingViewState.content.isEmpty {
-                            TextEditor(text: $placeholder)
-                                .font(.body)
-                                .foregroundColor(.gray)
-                                .disabled(true)
-                                .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
-                        }
-                        TextEditor(text: $greetingViewState.content)
-                            .foregroundColor(.black)
-                            .font(.body)
-                            .opacity(self.greetingViewState.content.isEmpty ? 0.25 : 1)
-                            .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
-                    }
+                    greetingCard
+                        .onChange(of: takePic, perform: { (value) in
+                            if value {
+                                let image = greetingCard.snapshot()
+                                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                            }
+                        })
                     Divider().foregroundColor(Color("mainColor"))
                         .padding(EdgeInsets(top: 8.0, leading: 0.0, bottom: 16.0, trailing: 0.0))
                     HStack(alignment: .center, spacing: 5, content: {
@@ -70,10 +71,34 @@ struct GreetingEditView: View {
         buttons.append(Alert.Button.cancel())
         return buttons
     }
+    var greetingCard: some View {
+        ZStack {
+            if !greetingStyle.bgrScreen.isEmpty {
+                Image(greetingStyle.bgrScreen)
+                    .resizable()
+                    .blur(radius: 2)
+            }
+            ZStack {
+                if self.greetingViewState.content.isEmpty {
+                    TextEditor(text: $placeholder)
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .disabled(true)
+                        .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
+                }
+                TextEditor(text: $greetingViewState.content)
+                    .foregroundColor(greetingStyle.color)
+                    .font(greetingStyle.fontName.weight(greetingStyle.weight))
+                    .opacity(self.greetingViewState.content.isEmpty ? 0.25 : 1)
+                    .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
+            }
+        }
+    }
 }
 
 struct GreetingEditView_Previews: PreviewProvider {
     static var previews: some View {
-        GreetingEditView(greetingViewState: .constant(greetingDefaultList[0]))
+        GreetingEditView(greetingViewState: .constant(greetingDefaultList[0]),
+                         greetingStyle: .constant(GreetingStyle()), takePic: .constant(false))
     }
 }

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Greeting {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Greeting> {
@@ -34,15 +33,14 @@ extension Greeting {
         name ?? "Unknown"
     }
     var wrappedCategory: Category {
-        return Category(rawValue:category ?? "None") ?? .none
+        return Category(rawValue: category ?? "None") ?? .none
     }
-    
     var wrappedMark: Int {
         return Int(mark)
     }
 
 }
 
-extension Greeting : Identifiable {
+extension Greeting: Identifiable {
 
 }

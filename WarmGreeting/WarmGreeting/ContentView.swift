@@ -4,8 +4,7 @@
 //
 //  Created by Olha Bilanyk on 28.07.2021.
 //
-// swiftlint:disable line_length
-
+// swiftlint: disable line_length
 
 import SwiftUI
 
@@ -37,7 +36,7 @@ struct ContentView: View {
                                 }.pickerStyle(SegmentedPickerStyle())
                                 .zIndex(-1.0)
                             }
-                        
+
                         FilteredList(filterValue: searchText, categoryIndex: selectedSearchScopeIndex
 //                                     , sortField: [NSSortDescriptor(keyPath: \Greeting.objectID, ascending: true)]
                         ) { (greeting: Greeting) in
