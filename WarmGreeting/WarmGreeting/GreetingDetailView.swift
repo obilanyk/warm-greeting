@@ -91,13 +91,15 @@ struct GreetingDetailView: View {
                                         editBgr = false
                                         editfont.toggle()
                                     }, label: {
-                                        Image("character.textbox")
+                                        Image(systemName: "character.textbox")
+                                            .foregroundColor(.black)
                                     })
                                     Button(action: {
                                         editfont = false
                                         editBgr.toggle()
                                     }, label: {
-                                        Image("photo")
+                                        Image(systemName: "photo")
+                                            .foregroundColor(.black)
                                     })
                                     Button(action: {
                                         showingActionSheet = true
