@@ -13,7 +13,6 @@ struct GreetingEditView: View {
     @State private var showingActionSheet = false
     @State private var placeholder: String = "Enter text"
     @Binding private var greetingStyle: GreetingStyle
-    
     init( greetingViewState: Binding<GreetingViewState>,
           greetingStyle: Binding<GreetingStyle>, takePic: Binding<Bool>) {
         UITextView.appearance().backgroundColor = .clear
@@ -29,13 +28,19 @@ struct GreetingEditView: View {
                 .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 12.0, trailing: 8.0))
             Group {
                 VStack {
+                    GeometryReader { geometry in
                     greetingCard
                         .onChange(of: takePic, perform: { (value) in
                             if value {
-                                let image = greetingCard.snapshot()
+//                                let image = greetingCard.snapshot()
+                                let image = greetingCard.takeScreenshot(origin:
+                                                                            geometry.frame(in: .global).origin,
+                                                                        size: geometry.size)
+                                takePic = false
                                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                             }
                         })
+                    }
                     Divider().foregroundColor(Color("mainColor"))
                         .padding(EdgeInsets(top: 8.0, leading: 0.0, bottom: 16.0, trailing: 0.0))
                     HStack(alignment: .center, spacing: 5, content: {
@@ -73,10 +78,10 @@ struct GreetingEditView: View {
     }
     var greetingCard: some View {
         ZStack {
-            if !greetingStyle.bgrScreen.isEmpty {
-                Image(greetingStyle.bgrScreen)
+            if let image = greetingStyle.bgImage {
+                image
                     .resizable()
-                    .blur(radius: 2)
+                Color.white.opacity(0.2)
             }
             ZStack {
                 if self.greetingViewState.content.isEmpty {
@@ -88,7 +93,8 @@ struct GreetingEditView: View {
                 }
                 TextEditor(text: $greetingViewState.content)
                     .foregroundColor(greetingStyle.color)
-                    .font(greetingStyle.fontName.weight(greetingStyle.weight))
+                    .font(.custom(greetingStyle.fontname,
+                                  size: CGFloat(greetingStyle.fontSize)).weight(greetingStyle.weight))
                     .opacity(self.greetingViewState.content.isEmpty ? 0.25 : 1)
                     .padding(EdgeInsets(top: 8.0, leading: 8.0, bottom: 32.0, trailing: 8.0))
             }

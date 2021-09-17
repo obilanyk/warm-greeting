@@ -15,7 +15,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func preloadData() {
         var appData = AppData()
         if !appData.preloadedData {
-            PersistentController.shared.initGreetingWithDefaultData()
+//            Utils().evaluateProblem(problemNumber: 1) {
+//                PersistentController.shared.jsonTwo { greeting in
+//                    PersistentController.shared.createGreeting(with: greeting)
+//                    // Time to evaluate problem 1: 0.108325111 seconds
+//                }
+//            }
+            Utils().evaluateProblem(problemNumber: 2) {
+                PersistentController.shared.jsonTwo { greeting in
+                    PersistentController.shared.createInBackround(with: greeting)
+                    // Time to evaluate problem 2: 0.013331933 seconds
+                }
+            }
             appData.preloadedData = true
             
         }

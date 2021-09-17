@@ -7,13 +7,6 @@
 // swiftlint:disable multiple_closures_with_trailing_closure
 import SwiftUI
 
-struct GreetingStyle {
-    var bgrScreen: String = ""
-    var color: Color = .black
-    var fontName: Font = .body
-    var weight: Font.Weight = Font.Weight.regular
-}
-
 struct GreetingDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     let greeting: Greeting
@@ -26,7 +19,7 @@ struct GreetingDetailView: View {
     @State private var editfont = false
     @State private var takePic = false
     @State private var greetingStyle = GreetingStyle()
-    
+
     var body: some View {
         ZStack {
             Color("mainColor")
@@ -35,7 +28,7 @@ struct GreetingDetailView: View {
             if editBgr {
                 VStack {
                     Spacer()
-                    LayerView(imageBg: $greetingStyle.bgrScreen, editBgr: $editBgr)
+                    LayerView(bgImage: $greetingStyle.bgImage, editBgr: $editBgr)
                         .frame(alignment: .bottom)
                         .ignoresSafeArea()
                 }
@@ -43,7 +36,7 @@ struct GreetingDetailView: View {
             if editfont {
                 VStack {
                     Spacer()
-                    FontView(fontName: $greetingStyle.fontName, editFont: $editfont)
+                    FontView(fontName: $greetingStyle.fontname, editFont: $editfont, fontSize: $greetingStyle.fontSize)
                         .frame(alignment: .bottom)
                         .ignoresSafeArea()
                 }
@@ -146,13 +139,10 @@ extension View {
     func snapshot() -> UIImage {
         let controller = UIHostingController(rootView: self)
         let view = controller.view
-        
         let targetSize = controller.view.intrinsicContentSize
         view?.bounds = CGRect(origin: .zero, size: targetSize)
         view?.backgroundColor = .clear
-        
         let renderer = UIGraphicsImageRenderer(size: targetSize)
-        
         return renderer.image { _ in
             view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
@@ -166,6 +156,7 @@ extension View {
         return hosting.view.screenShot
     }
 }
+
 extension UIView {
     var screenShot: UIImage {
         let rect = self.bounds
